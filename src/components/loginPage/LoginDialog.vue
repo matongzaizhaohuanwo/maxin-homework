@@ -57,6 +57,7 @@
 <script lang="ts">
 import Result, { sendGetRequest, sendPostJsonRequest } from '@/utils/NetWorkUtil';
 import { API_GRADE_INFO, API_LOGIN, API_REGISTER } from '@/constants/Apis';
+import StateCode from '@/constants/StateCode';
 
 interface RegisterData {
   user_id: number;
@@ -68,8 +69,8 @@ interface RegisterData {
 }
 
 export class UserType {
-  static TEACHER: number = 0;
-  static STUDENT: number = 1;
+  static TEACHER: number = 1;
+  static STUDENT: number = 2;
 }
 
 export default {
@@ -132,6 +133,9 @@ export default {
     };
   },
   created() {
+    if (this.$route.query.redirect) {
+      this.$Message.warning({content:'please login', duration:2})
+    }
     sendGetRequest(API_GRADE_INFO()).then((result: Result) => {
       this.gradeData.push(result.data);
     });
@@ -168,8 +172,19 @@ export default {
               password: this.loginRuleForm.password
             };
             sendPostJsonRequest(API_LOGIN(), body).then((result: Result) => {
-              if (result.result === 200) {
-                this.$router.replace({ name: 'TeacherPage' });
+              if (result.result === StateCode.SUCCESS) {
+                this.$Message.success('登录成功');
+                if (this.$route.query.redirect) {
+                  this.$router.replace(this.$route.query.redirect);
+                  return;
+                }
+                if (this.userType === UserType.TEACHER) {
+                  this.$router.replace({ name: 'TeacherPage' });
+                }else {
+                  this.$router.replace({ name: 'StudentPage' });
+                }
+              } else {
+                this.$Message.error(result.message);
               }
             });
           }

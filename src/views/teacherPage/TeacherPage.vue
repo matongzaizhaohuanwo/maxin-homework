@@ -17,6 +17,9 @@
         {{ getTimeGMT(row.end_time) }}
       </div>
     </Table>
+    <div style="display: flex;justify-content: flex-end;margin-top: 24px">
+      <Page :total="50" simple @on-change="currentChange"/>
+    </div>
     <create-homework-dialog ref="$createHomeworkDialog" />
   </div>
 </template>
@@ -72,6 +75,9 @@ export default {
   methods: {
     createHomework() {
       this.$refs.$createHomeworkDialog.show();
+    },
+    currentChange(current){
+
     }
   }
 };

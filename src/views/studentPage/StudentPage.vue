@@ -11,22 +11,38 @@
         {{ getTimeGMT(row.end_time) }}
       </div>
       <template slot-scope="{ row }" slot="submit">
-        <Button type="primary" size="small" @click="submit(row.work_id)">Submit</Button>
+        <div style="position: relative">
+          <Button class="btn-upload" type="primary" size="small">
+            Submit
+          </Button>
+          <input
+            id="upload"
+            type="file"
+            multiple="multiple"
+            style="cursor: pointer;position: absolute;top: 0;right: 0;opacity: 0"
+            @change="submit(row.homework_id)"
+          />
+        </div>
+        <!--<Button type="primary" size="small" @click="submit(row.id)">Submit</Button>-->
       </template>
     </Table>
+    <div style="display: flex;justify-content: flex-end;margin-top: 24px">
+      <Page :total="50" simple/>
+    </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { getTimeGMT } from '@/utils/TimeUtil';
-import { sendGetRequest } from '@/utils/NetWorkUtil';
-import { API_HOMEWORK_LIST } from '@/constants/Apis';
+import Result, { sendGetRequest, sendPostFormRequest } from '@/utils/NetWorkUtil';
+import { API_HOMEWORK_LIST, API_SUBMIT_HOMEWORK } from '@/constants/Apis';
 
 export default {
   name: 'StudentPage',
   data() {
     return {
       getTimeGMT: getTimeGMT,
+      API_SUBMIT_HOMEWORK: API_SUBMIT_HOMEWORK,
       columns: [
         {
           title: '#',
@@ -71,7 +87,15 @@ export default {
     });
   },
   methods: {
-    submit(id) {}
+    submit(id) {
+      const file = document.getElementById('upload');
+      const formData = new FormData();
+      formData.append('file', file.files[0]);
+      sendPostFormRequest(
+        `${API_SUBMIT_HOMEWORK()}?homework_id=${id}&title=${file.files[0].name}`,
+        formData
+      ).then((result: Result) => {});
+    }
   }
 };
 </script>

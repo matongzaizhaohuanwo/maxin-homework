@@ -10,9 +10,12 @@
         <Button type="primary" size="small" style="margin-right: 8px" @click="watch(row.homework_id, row.title)">
           Watch
         </Button>
-        <Button type="error" size="small" @click="assess(row.work_id)">Assess</Button>
+        <Button type="error" size="small" @click="assess(row.work_id)">Grade</Button>
       </template>
     </Table>
+    <div style="display: flex;justify-content: flex-end;margin-top: 24px">
+      <Page :total="50" simple/>
+    </div>
     <assess-dialog ref="$assessDialog" />
   </div>
 </template>

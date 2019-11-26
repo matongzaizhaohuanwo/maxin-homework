@@ -6,6 +6,13 @@ export function API_LOGIN(): string {
 }
 
 /**
+ * 登出
+ */
+export function API_LOGOUT(): string {
+  return '/api/v1/logout';
+}
+
+/**
  * 注册
  */
 export function API_REGISTER(): string {
@@ -52,4 +59,11 @@ export function API_GET_FILE(): string {
  */
 export function API_COMMENT(): string {
   return '/api/v1/comment-work';
+}
+
+/**
+ * 提交作业
+ */
+export function API_SUBMIT_HOMEWORK(): string {
+  return '/api/v1/post-work';
 }
