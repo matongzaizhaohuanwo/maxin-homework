@@ -3,6 +3,9 @@ import VueRouter from 'vue-router';
 import LoginPage from '../views/loginPage/LoginPage.vue';
 import TeacherPage from '../views/teacherPage/TeacherPage.vue';
 import SubmitListPage from '../views/teacherPage/SubmitListPage.vue';
+import StudentPage from '../views/studentPage/StudentPage.vue';
+// @ts-ignore
+import { UserType } from '@/components/loginPage/LoginDialog.vue';
 
 Vue.use(VueRouter);
 
@@ -13,15 +16,26 @@ const routes = [
     component: LoginPage
   },
   {
-    path: '/teacher',
+    path: '/teacher/homework',
     name: 'TeacherPage',
     component: TeacherPage,
+    mate: {
+      type: UserType.TEACHER
+    }
   },
   {
-        path: '/homework/:id',
-        name: 'SubmitListPage',
-        component: SubmitListPage
+    path: '/teacher/homework/:id',
+    name: 'SubmitListPage',
+    component: SubmitListPage
   },
+  {
+    path: '/student/homework',
+    name: 'StudentPage',
+    component: StudentPage,
+    mate: {
+      type: UserType.STUDENT
+    }
+  }
 ];
 
 const router = new VueRouter({

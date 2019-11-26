@@ -2,14 +2,14 @@
   <div class="container">
     <logo />
     <h2 class="subtitle">
-      作业批改系统
+      HOMEWORK GRADE SYSTEM
     </h2>
     <div class="links">
       <div class="button--grey" @click="handleLoginEvent('teacher')">
-        教师登录
+        Teacher Login
       </div>
       <div class="button--grey" @click="handleLoginEvent('student')">
-        学生登录
+        Student Login
       </div>
     </div>
     <login-dialog ref="$loginDialog" />
@@ -55,7 +55,7 @@ export default {
   font-weight: 300;
   font-size: 42px;
   color: #35495e;
-  word-spacing: 150px;
+  word-spacing: 10px;
   padding: 15px 0;
 }
 

@@ -1,12 +1,6 @@
 <template>
   <div>
-    <Button icon="ios-add" style="margin-bottom: 16px" @click="createHomework">Create Homework</Button>
-
     <Table class="table" :columns="columns" :data="data" disabled-hover border>
-      <router-link slot-scope="{ row }" slot="title" :to="{ name: 'SubmitListPage', params: { id: row.homework_id } }">
-        {{ row.title }}
-      </router-link>
-
       <div slot-scope="{ row }" slot="create_time">
         {{ getTimeGMT(row.create_time) }}
       </div>
@@ -16,8 +10,10 @@
       <div slot-scope="{ row }" slot="end_time">
         {{ getTimeGMT(row.end_time) }}
       </div>
+      <template slot-scope="{ row }" slot="submit">
+        <Button type="primary" size="small" @click="submit(row.work_id)">Submit</Button>
+      </template>
     </Table>
-    <create-homework-dialog ref="$createHomeworkDialog" />
   </div>
 </template>
 
@@ -25,10 +21,9 @@
 import { getTimeGMT } from '@/utils/TimeUtil';
 import { sendGetRequest } from '@/utils/NetWorkUtil';
 import { API_HOMEWORK_LIST } from '@/constants/Apis';
-import CreateHomeworkDialog from '@/components/teacherPage/CreateHomeworkDialog';
 
 export default {
-  components: { CreateHomeworkDialog },
+  name: 'StudentPage',
   data() {
     return {
       getTimeGMT: getTimeGMT,
@@ -41,7 +36,7 @@ export default {
         },
         {
           title: 'Title',
-          slot: 'title'
+          key: 'title'
         },
         {
           title: 'Creator',
@@ -58,6 +53,12 @@ export default {
         {
           title: 'End Time',
           slot: 'end_time'
+        },
+        {
+          title: ' ',
+          slot: 'submit',
+          align: 'center',
+          width: 100
         }
       ],
       data: []
@@ -70,9 +71,7 @@ export default {
     });
   },
   methods: {
-    createHomework() {
-      this.$refs.$createHomeworkDialog.show();
-    }
+    submit(id) {}
   }
 };
 </script>

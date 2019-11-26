@@ -6,12 +6,11 @@ const TIME_OUT = 10000;
 const TAG = 'NetWorkUtil';
 
 export default class Result {
-
   result: number = 0;
   data: any = null;
   message: string = '';
 
-  constructor(result: number, data: any, message: string){
+  constructor(result: number, data: any, message: string) {
     this.result = result;
     this.data = data;
     this.message = message;
@@ -86,7 +85,7 @@ function sendRequest(url: string, method: string, body: any, headers: any, confi
       }
     })
     .then(json => {
-      return new Result(json.code, json.data, json.massage)
+      return new Result(json.code, json.data, json.massage);
     })
     .catch(error => {
       console.log(error);

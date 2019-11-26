@@ -39,3 +39,17 @@ export function API_CREATE_HOMEWORK(): string {
 export function API_SUBMIT_LIST(): string {
   return '/api/v1/grade-homework';
 }
+
+/**
+ * 下载文件
+ */
+export function API_GET_FILE(): string {
+  return '/api/v1/workfile';
+}
+
+/**
+ * 评分
+ */
+export function API_COMMENT(): string {
+  return '/api/v1/comment-work';
+}

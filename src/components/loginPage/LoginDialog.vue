@@ -58,18 +58,18 @@
 import Result, { sendGetRequest, sendPostJsonRequest } from '@/utils/NetWorkUtil';
 import { API_GRADE_INFO, API_LOGIN, API_REGISTER } from '@/constants/Apis';
 
-interface RegisterData{
-  user_id: number,
-  real_name: string,
-  password: string,
-  major: string,
-  level: number,
-  u_type: UserType
+interface RegisterData {
+  user_id: number;
+  real_name: string;
+  password: string;
+  major: string;
+  level: number;
+  u_type: UserType;
 }
 
-class UserType {
-  static TEACHER:number = 0;
-  static STUDENT:number = 1;
+export class UserType {
+  static TEACHER: number = 0;
+  static STUDENT: number = 1;
 }
 
 export default {
@@ -132,7 +132,7 @@ export default {
     };
   },
   created() {
-    sendGetRequest(API_GRADE_INFO()).then((result:Result) => {
+    sendGetRequest(API_GRADE_INFO()).then((result: Result) => {
       this.gradeData.push(result.data);
     });
   },
@@ -153,7 +153,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           if (formName === 'registerRuleForm') {
-            const body:RegisterData = {
+            const body: RegisterData = {
               user_id: parseInt(this.registerRuleForm.id),
               real_name: this.registerRuleForm.name,
               password: this.registerRuleForm.password,
@@ -161,13 +161,13 @@ export default {
               level: parseInt(this.registerRuleForm.grade[0]),
               u_type: this.userType
             };
-            sendPostJsonRequest(API_REGISTER(), body).then((result:Result) => {});
+            sendPostJsonRequest(API_REGISTER(), body).then((result: Result) => {});
           } else {
             const body = {
               account_id: parseInt(this.loginRuleForm.id),
               password: this.loginRuleForm.password
             };
-            sendPostJsonRequest(API_LOGIN(), body).then((result:Result) => {
+            sendPostJsonRequest(API_LOGIN(), body).then((result: Result) => {
               if (result.result === 200) {
                 this.$router.replace({ name: 'TeacherPage' });
               }
