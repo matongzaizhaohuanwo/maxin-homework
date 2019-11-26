@@ -14,7 +14,7 @@
       </template>
     </Table>
     <div style="display: flex;justify-content: flex-end;margin-top: 24px">
-      <Page :total="50" simple/>
+      <Page :total="50" simple />
     </div>
     <assess-dialog ref="$assessDialog" />
   </div>

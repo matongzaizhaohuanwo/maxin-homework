@@ -3,8 +3,8 @@
     <Layout>
       <div class="layout-header" v-if="showHeader">
         <div style="display: flex;align-items: center">
-          <img :src="logo" alt="" style="height: 35px;width: 50px" />
-          <span style="margin-left: 8px;font-size: 22px;margin-top: 4px">HOMEWORK GRADE SYSTEM</span>
+          <img :src="logo" alt="" style="height: 35px;width: 35px" />
+          <span style="margin-left: 8px;font-size: 21px;margin-top: 4px">HOMEWORK GRADE SYSTEM</span>
         </div>
         <div class="logout" @click="logout">
           <span>Logout</span>

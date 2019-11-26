@@ -134,7 +134,7 @@ export default {
   },
   created() {
     if (this.$route.query.redirect) {
-      this.$Message.warning({content:'please login', duration:2})
+      this.$Message.warning({ content: 'please login', duration: 2 });
     }
     sendGetRequest(API_GRADE_INFO()).then((result: Result) => {
       this.gradeData.push(result.data);
@@ -180,7 +180,7 @@ export default {
                 }
                 if (this.userType === UserType.TEACHER) {
                   this.$router.replace({ name: 'TeacherPage' });
-                }else {
+                } else {
                   this.$router.replace({ name: 'StudentPage' });
                 }
               } else {

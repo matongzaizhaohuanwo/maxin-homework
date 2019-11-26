@@ -18,7 +18,7 @@
       </div>
     </Table>
     <div style="display: flex;justify-content: flex-end;margin-top: 24px">
-      <Page :total="50" simple @on-change="currentChange"/>
+      <Page :total="50" simple @on-change="currentChange" />
     </div>
     <create-homework-dialog ref="$createHomeworkDialog" />
   </div>
@@ -76,9 +76,7 @@ export default {
     createHomework() {
       this.$refs.$createHomeworkDialog.show();
     },
-    currentChange(current){
-
-    }
+    currentChange(current) {}
   }
 };
 </script>

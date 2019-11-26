@@ -66,7 +66,7 @@ router.beforeEach((to: any, from: any, next: any) => {
   const isLogin = new Vue().$cookies.get('wm_login');
   store.commit('setIsLogin', isLogin);
   if (to.meta.requireLogin) {
-    !isLogin ? next({ path: '/', query: { redirect: to.fullPath }  }) : null;
+    !isLogin ? next({ path: '/', query: { redirect: to.fullPath } }) : null;
   }
   next();
 });
