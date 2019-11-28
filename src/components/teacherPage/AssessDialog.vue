@@ -22,6 +22,7 @@
 <script lang="ts">
 import Result, { sendGetRequest, sendPostJsonRequest } from '@/utils/NetWorkUtil';
 import { API_COMMENT, API_CREATE_HOMEWORK, API_GRADE_INFO, API_LOGIN, API_REGISTER } from '@/constants/Apis';
+import StateCode from '../../constants/StateCode';
 
 interface AssessDialog {
   level: number;
@@ -65,7 +66,14 @@ export default {
             score: parseInt(this.ruleForm.score),
             work_id: parseInt(this.workId)
           };
-          sendPostJsonRequest(API_COMMENT(), body).then((result: Result) => {});
+          sendPostJsonRequest(API_COMMENT(), body).then((result: Result) => {
+            if (result.result === StateCode.SUCCESS) {
+              this.$Message.success('success');
+              this.hide();
+            } else {
+              this.$Message.error(result.message);
+            }
+          });
         }
       });
     }

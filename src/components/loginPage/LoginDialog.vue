@@ -58,6 +58,7 @@
 import Result, { sendGetRequest, sendPostJsonRequest } from '@/utils/NetWorkUtil';
 import { API_GRADE_INFO, API_LOGIN, API_REGISTER } from '@/constants/Apis';
 import StateCode from '@/constants/StateCode';
+import { grade } from '@/constants/grade';
 
 interface RegisterData {
   user_id: number;
@@ -136,9 +137,7 @@ export default {
     if (this.$route.query.redirect) {
       this.$Message.warning({ content: 'please login', duration: 2 });
     }
-    sendGetRequest(API_GRADE_INFO()).then((result: Result) => {
-      this.gradeData.push(result.data);
-    });
+    this.gradeData = grade;
   },
   methods: {
     show(type) {
@@ -195,7 +194,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lanh="less">
 /deep/ .ivu-modal-footer {
   border-top: none;
   padding-top: 0;
@@ -203,9 +202,5 @@ export default {
 
 /deep/ .ivu-modal-body {
   padding-bottom: 0;
-}
-
-/deep/ .ivu-modal {
-  top: 300px;
 }
 </style>

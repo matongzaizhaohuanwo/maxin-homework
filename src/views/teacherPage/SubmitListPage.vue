@@ -14,7 +14,7 @@
       </template>
     </Table>
     <div style="display: flex;justify-content: flex-end;margin-top: 24px">
-      <Page :total="50" simple />
+      <Page :total="total" simple @on-change="currentChange" />
     </div>
     <assess-dialog ref="$assessDialog" />
   </div>
@@ -62,38 +62,12 @@ export default {
           width: 165
         }
       ],
-      data: []
+      data: [],
+      total: 10
     };
   },
   mounted() {
-    const body = { offset: 0, limit: 5, homework_id: parseInt(this.$route.params.id) };
-    sendGetRequest(API_SUBMIT_LIST(), body).then(result => {
-      this.data = result.data.Works;
-      this.data = [
-        {
-          work_id: 1,
-          creator_id: 0,
-          score: 0,
-          grade_id: 0,
-          homework_id: 0,
-          creator: '王炳琪',
-          title: '方案',
-          comment: '很好',
-          upload_time: '2019-11-21T11:21:29+08:00'
-        },
-        {
-          work_id: 2,
-          creator_id: 0,
-          score: 10,
-          grade_id: 0,
-          homework_id: 0,
-          creator: '马鑫',
-          title: '方案',
-          comment: '很好',
-          upload_time: '2019-11-21T11:21:29+08:00'
-        }
-      ];
-    });
+    this.getData(0);
   },
   methods: {
     back() {
@@ -101,13 +75,23 @@ export default {
     },
     watch(id, filename) {
       const element = document.createElement('a');
-      element.href = `${API_GET_FILE()}?homework_id=${id}&file_name=${filename}`;
+      element.href = `${API_GET_FILE()}?homework_id=${12}&file_name=${filename}`;
       element.download = 'filename';
       element.type = 'application/octet-stream';
       element.click();
     },
     assess(id) {
       this.$refs.$assessDialog.show(id);
+    },
+    currentChange(current) {
+      this.getData((current - 1) * 10);
+    },
+    getData(offset) {
+      const body = { offset: offset, limit: 10, homework_id: parseInt(this.$route.params.id) };
+      sendGetRequest(API_SUBMIT_LIST(), body).then(result => {
+        this.data = result.data.Works;
+        this.total = result.data.count;
+      });
     }
   }
 };

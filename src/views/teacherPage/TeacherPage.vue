@@ -18,7 +18,7 @@
       </div>
     </Table>
     <div style="display: flex;justify-content: flex-end;margin-top: 24px">
-      <Page :total="50" simple @on-change="currentChange" />
+      <Page :total="total" simple @on-change="currentChange" />
     </div>
     <create-homework-dialog ref="$createHomeworkDialog" />
   </div>
@@ -63,20 +63,27 @@ export default {
           slot: 'end_time'
         }
       ],
-      data: []
+      data: [],
+      total: 0
     };
   },
   mounted() {
-    const body = { offset: 0, limit: 5 };
-    sendGetRequest(API_HOMEWORK_LIST(), body).then(result => {
-      this.data = result.data.homeworks;
-    });
+    this.getData(0);
   },
   methods: {
     createHomework() {
       this.$refs.$createHomeworkDialog.show();
     },
-    currentChange(current) {}
+    currentChange(current) {
+      this.getData((current - 1) * 10);
+    },
+    getData(offset) {
+      const body = { offset: offset, limit: 10 };
+      sendGetRequest(API_HOMEWORK_LIST(), body).then(result => {
+        this.data = result.data.homeworks;
+        this.total = result.data.count;
+      });
+    }
   }
 };
 </script>

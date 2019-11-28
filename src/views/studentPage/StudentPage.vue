@@ -27,7 +27,7 @@
       </template>
     </Table>
     <div style="display: flex;justify-content: flex-end;margin-top: 24px">
-      <Page :total="50" simple />
+      <Page :total="total" simple @on-change="currentChange" />
     </div>
   </div>
 </template>
@@ -42,7 +42,6 @@ export default {
   data() {
     return {
       getTimeGMT: getTimeGMT,
-      API_SUBMIT_HOMEWORK: API_SUBMIT_HOMEWORK,
       columns: [
         {
           title: '#',
@@ -77,24 +76,31 @@ export default {
           width: 100
         }
       ],
-      data: []
+      data: [],
+      total: 0
     };
   },
   mounted() {
-    const body = { offset: 0, limit: 5 };
-    sendGetRequest(API_HOMEWORK_LIST(), body).then(result => {
-      this.data = result.data.homeworks;
-    });
+    this.getData(0);
   },
   methods: {
     submit(id) {
       const file = document.getElementById('upload');
       const formData = new FormData();
-      formData.append('file', file.files[0]);
-      sendPostFormRequest(
-        `${API_SUBMIT_HOMEWORK()}?homework_id=${id}&title=${file.files[0].name}`,
-        formData
-      ).then((result: Result) => {});
+      console.log(file.files);
+      formData.set('upload_work_file', file.files[0]);
+      formData.set('homework_id', id);
+      sendPostFormRequest(API_SUBMIT_HOMEWORK(), formData).then((result: Result) => {});
+    },
+    currentChange(current) {
+      this.getData((current - 1) * 10);
+    },
+    getData(offset) {
+      const body = { offset: offset, limit: 10 };
+      sendGetRequest(API_HOMEWORK_LIST(), body).then(result => {
+        this.data = result.data.homeworks;
+        this.total = result.data.count;
+      });
     }
   }
 };

@@ -43,6 +43,8 @@
 <script lang="ts">
 import Result, { sendGetRequest, sendPostJsonRequest } from '@/utils/NetWorkUtil';
 import { API_CREATE_HOMEWORK, API_GRADE_INFO, API_LOGIN, API_REGISTER } from '@/constants/Apis';
+import StateCode from '../../constants/StateCode';
+import {grade} from '@/constants/grade';
 
 interface CreateHomeworkData {
   level: number;
@@ -83,9 +85,7 @@ export default {
     };
   },
   created() {
-    sendGetRequest(API_GRADE_INFO()).then((result: Result) => {
-      this.gradeData.push(result.data);
-    });
+      this.gradeData = grade
   },
   methods: {
     show() {
@@ -104,7 +104,14 @@ export default {
             start_time: this.ruleForm.startTime,
             end_time: this.ruleForm.endTime
           };
-          sendPostJsonRequest(API_CREATE_HOMEWORK(), body).then((result: Result) => {});
+          sendPostJsonRequest(API_CREATE_HOMEWORK(), body).then((result: Result) => {
+            if (result.result === StateCode.SUCCESS) {
+              this.$Message.success('success');
+              this.hide();
+            } else {
+              this.$Message.error(result.message);
+            }
+          });
         }
       });
     }

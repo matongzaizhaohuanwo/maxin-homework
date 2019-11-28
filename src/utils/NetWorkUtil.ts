@@ -85,7 +85,7 @@ function sendRequest(url: string, method: string, body: any, headers: any, confi
       }
     })
     .then(json => {
-      return new Result(json.code, json.data, json.massage);
+      return new Result(json.code, json.data, json.msg);
     })
     .catch(error => {
       console.log(error);
