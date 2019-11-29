@@ -75,7 +75,7 @@ export default {
     },
     watch(id, filename) {
       const element = document.createElement('a');
-      element.href = `${API_GET_FILE()}?homework_id=${12}&file_name=${filename}`;
+      element.href = `${API_GET_FILE()}?homework_id=${id}&file_name=${filename}`;
       element.download = 'filename';
       element.type = 'application/octet-stream';
       element.click();

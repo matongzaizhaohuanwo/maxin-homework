@@ -55,7 +55,7 @@ export default class App extends Vue {
 .container {
   margin-top: 32px;
   padding: 0 48px;
-  height: calc(~'100vh - 64px');
+  min-height: calc(~'100vh - 91.5px');
 }
 
 .layout-header {

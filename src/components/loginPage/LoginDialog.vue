@@ -2,13 +2,13 @@
   <Modal
     ref="model"
     v-model="dialogVisible"
-    :title="`${userType === 0 ? 'Teacher' : 'Student'} ${isLogin ? 'Login' : 'Register'}`"
+    :title="`${userType === 1 ? 'Teacher' : 'Student'} ${isLogin ? 'Login' : 'Register'}`"
     width="400"
     :mask-closable="false"
   >
     <Form v-show="isLogin" ref="loginRuleForm" :model="loginRuleForm" :rules="loginRules">
       <FormItem prop="id">
-        <Input v-model="loginRuleForm.id" placeholder="Student Id">
+        <Input v-model="loginRuleForm.id" placeholder="Id">
           <Icon slot="prepend" type="ios-book-outline" />
         </Input>
       </FormItem>
@@ -26,7 +26,7 @@
 
     <Form v-show="!isLogin" ref="registerRuleForm" :model="registerRuleForm" :rules="registerRules">
       <FormItem prop="id">
-        <Input v-model="registerRuleForm.id" placeholder="Student Id">
+        <Input v-model="registerRuleForm.id" placeholder="Id">
           <Icon slot="prepend" type="ios-book-outline" />
         </Input>
       </FormItem>
